@@ -20,7 +20,7 @@ On Linux, install xclip or xsel via package manager. For example, in Debian:
     sudo apt-get install xclip
     sudo apt-get install xsel
 
-Otherwise on Linux, you will need the gi (GTK+ 3) or PyQt5/PyQt4 modules installed.
+Otherwise on Linux, you will need the gi (GTK+ 3) or PyQt6/PyQt4 modules installed.
 gtk (GTK +2) is still supported as an older alternative to gi.
 
 gtk and PyQt4 modules are not available for Python 3.
@@ -187,12 +187,12 @@ def init_qt_clipboard():
     global QApplication
     # $DISPLAY should exist
 
-    # Try to import from qtpy, but if that fails try PyQt5 then PyQt4
+    # Try to import from qtpy, but if that fails try PyQt6 then PyQt4
     try:
         from qtpy.QtWidgets import QApplication
     except:
         try:
-            from PyQt5.QtWidgets import QApplication
+            from PyQt6.QtWidgets import QApplication
         except:
             from PyQt4.QtGui import QApplication
 
@@ -512,7 +512,7 @@ def determine_clipboard():
     accordingly.
     '''
 
-    global Foundation, AppKit, gtk, qtpy, PyQt4, PyQt5
+    global Foundation, AppKit, gtk, qtpy, PyQt4, PyQt6
 
     # Setup for the CYGWIN platform:
     if 'cygwin' in platform.system().lower(): # Cygwin has a variety of values returned by platform.system(), such as 'CYGWIN_NT-6.1'
@@ -571,7 +571,7 @@ def determine_clipboard():
         except ImportError:
             # If qtpy isn't installed, fall back on importing PyQt4.
             try:
-                import PyQt5  # check if PyQt5 is installed
+                import PyQt6  # check if PyQt6 is installed
             except ImportError:
                 try:
                     import PyQt4  # check if PyQt4 is installed
@@ -608,7 +608,7 @@ def set_clipboard(clipboard):
     clipboard_types = {'pbcopy': init_osx_pbcopy_clipboard,
                        'pyobjc': init_osx_pyobjc_clipboard,
                        'gtk': init_gtk_clipboard,
-                       'qt': init_qt_clipboard, # TODO - split this into 'qtpy', 'pyqt4', and 'pyqt5'
+                       'qt': init_qt_clipboard, # TODO - split this into 'qtpy', 'pyqt4', and 'pyqt6'
                        'xclip': init_xclip_clipboard,
                        'xsel': init_xsel_clipboard,
                        'klipper': init_klipper_clipboard,

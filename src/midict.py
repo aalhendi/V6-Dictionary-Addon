@@ -32,7 +32,7 @@ import codecs
 from .forvodl import Forvo
 import ntpath
 from .miutils import miInfo
-
+from PyQt6 import QtSvgWidgets
 class MIDict(AnkiWebView):
 
     def __init__(self, dictInt, db, path, day, terms  = False):
@@ -715,7 +715,9 @@ def imageResizer(img):
     ratio = min(maxw/width, maxh/height)
     height = int(round(ratio * height))
     width = int(round(ratio * width))
-    return img.resize((width, height) , Image.ANTIALIAS)
+    #TODO: This imports from PIL ?
+    # return img.resize((width, height) , Image.ANTIALIAS)
+    return img.resize((width, height))
 
 class ClipThread(QObject):
     
@@ -1103,7 +1105,7 @@ class DictInterface(QWidget):
         with open(insertHTML, "r", encoding="utf-8") as insertHTMLFile:
             return insertHTMLFile.read() 
 
-    def focusWindow():
+    def focusWindow(self):
         self.show()
         if self.windowState() == Qt.WindowMinimized:
             self.setWindowState(Qt.WindowNoState)
@@ -1901,10 +1903,10 @@ QScrollBar:vertical {
         subcontrol-origin: margin;
     }'''
 
-class MigakuSVG(QSvgWidget):
+class MigakuSVG(QtSvgWidgets.QSvgWidget):
     clicked=pyqtSignal()
     def __init__(self, parent=None):
-        QSvgWidget.__init__(self, parent)
+        QtSvgWidgets.QSvgWidget.__init__(self, parent)
 
     def mousePressEvent(self, ev):
         self.clicked.emit()
@@ -1925,7 +1927,7 @@ class SVGPushButton(QPushButton):
     def setSvg(self, svgPath):
         for i in reversed(range(self.layout.count())): 
             self.layout.itemAt(i).widget().setParent(None)
-        svg = QSvgWidget(svgPath)
+        svg = QtSvgWidgets.QSvgWidget(svgPath)
         svg.setFixedSize(self.svgWidth, self.svgHeight)
         self.layout.addWidget(svg)
 

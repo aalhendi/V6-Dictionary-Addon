@@ -226,6 +226,7 @@ will lead to a blank card and therefore has not been added. \
 Please review your template and notetype combination."""), level='wrn', day = self.dictInt.nightModeToggler.day)
             return False
         self.mw.col.save()
+        #TODO: This call is not needed with new updates https://forums.ankiweb.net/t/add-on-porting-notes-for-anki-2-1-45/11212#ui-change-tracking-5
         self.mw.reset()
         return True
 

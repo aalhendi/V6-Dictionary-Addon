@@ -4,7 +4,7 @@
 import json
 
 from aqt.qt import *
-from aqt.utils import askUser, showInfo
+from aqt.utils import askUser, showInfo, isMac
 import datetime
 from .miutils import miInfo, miAsk
 
