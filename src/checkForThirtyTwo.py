@@ -12,5 +12,4 @@ def checkForThirtyTwo():
 			if miAsk(msg, customText = ["Take me there", "No"]):
 				openLink("https://github.com/ankitects/anki/releases")
 
-
 addHook("profileLoaded", checkForThirtyTwo)
