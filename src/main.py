@@ -12,7 +12,7 @@ from anki.hooks import addHook, wrap, runHook, runFilter
 from aqt.utils import shortcut, saveGeom, saveSplitter, showInfo, askUser
 import aqt.editor
 import json
-from aqt import mw
+from aqt import mw # main window object (mw) from aqt
 from aqt.qt import *
 from . import dictdb
 from aqt.webview import AnkiWebView
@@ -29,6 +29,7 @@ from . import googleimages
 from .forvodl import Forvo
 from urllib.request import Request, urlopen
 from aqt.previewer import Previewer
+# from aqt.editor import Previewer #The preview button has moved into the editor, and the filter button has been removed.
 import requests
 import time
 import os
@@ -756,6 +757,8 @@ def exportDefinitions(og, dest, addType, dictNs, howMany, notes, generateWidget,
         "limit" : howMany
     }
     mw.addonManager.writeConfig(__name__, config)
+    #TODO: Remove this call https://forums.ankiweb.net/t/add-on-porting-notes-for-anki-2-1-45/11212#undoredo-4
+    # All calls to mw.checkpoint() and card.flush(), note.flush()
     mw.checkpoint('Definition Export')
     if not miAsk('Are you sure you want to export definitions for the "'+ og + '" field into the "' + dest +'" field?'):
         return
@@ -808,6 +811,7 @@ def exportDefinitions(og, dest, addType, dictNs, howMany, notes, generateWidget,
         bar.setValue(val)
         mw.app.processEvents()
     mw.progress.finish()
+    #TODO: This call is not needed with new updates https://forums.ankiweb.net/t/add-on-porting-notes-for-anki-2-1-45/11212#ui-change-tracking-5
     mw.reset()
     generateWidget.hide()
     generateWidget.deleteLater()
@@ -872,9 +876,9 @@ def checkCurrentEditor(self):
     if mw.migakuDictionary and mw.migakuDictionary.isVisible():
         mw.migakuDictionary.dict.checkEditorClose(self.editor)
 
-Browser._onRowChanged = wrap(Browser._onRowChanged, setBrowserEditor)
+Browser.on_all_or_selected_rows_changed = wrap(Browser.on_all_or_selected_rows_changed, setBrowserEditor)
 
-AddCards._reject = wrap(AddCards._reject, checkCurrentEditor)
+AddCards._close = wrap(AddCards._close, checkCurrentEditor)
 EditCurrent._saveAndClose = wrap(EditCurrent._saveAndClose, checkCurrentEditor)
 Browser._closeWindow = wrap(Browser._closeWindow, checkCurrentEditor)
 
@@ -889,6 +893,7 @@ bodyClick = '''document.addEventListener("click", function (ev) {
 def addBodyClick(self):
     self.web.eval(bodyClick)
 
+#TODO: Huh?
 def addClickEvent(self):
     self.historyButton.clicked.connect(lambda: attention(self))
 

@@ -14,7 +14,7 @@ import re
 import os
 from os.path import dirname, join, exists
 from aqt import mw
-from PyQt5 import QtCore
+from PyQt6 import QtCore
 from .miutils import miInfo, miAsk
 from shutil import copyfile
 from operator import itemgetter
