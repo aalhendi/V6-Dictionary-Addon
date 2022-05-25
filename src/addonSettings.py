@@ -19,6 +19,7 @@ from .addTemplate import TemplateEditor
 from .miutils import miInfo, miAsk
 from . dictionaryManager import DictionaryManagerWidget
 from .ffmpegInstaller import FFMPEGInstaller
+from PyQt6 import QtSvgWidgets
 
 verNumber = "1.3.8"
 
@@ -29,10 +30,10 @@ def attemptOpenLink(cmd):
 
 
 
-class MigakuSVG(QSvgWidget):
+class MigakuSVG(QtSvgWidgets.QSvgWidget):
     clicked=pyqtSignal()
     def __init__(self, parent=None):
-        QSvgWidget.__init__(self, parent)
+        QtSvgWidgets.QSvgWidget.__init__(self, parent)
 
     def mousePressEvent(self, ev):
         self.clicked.emit()

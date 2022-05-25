@@ -9,6 +9,9 @@ def checkForThirtyTwo():
 	if isWin or isMac:
 		qVer = QT_VERSION_STR
 		invalid = ['5.12.6', '5.9.7']
+		#TODO: Removeme
+		if qVer[0] == '6':
+			miAsk("Sup")
 		if qVer in invalid:
 			msg = 'You are on 32-bit Anki!\n32-bit Anki has known compatibility issues with Migaku addons.\n\nMigaku add-ons and Browser Extension integration WILL NOT WORK CORRECTLY.\n\nIf you\'re on a 64-bit system, please update to the 64-bit version of Anki.'
 			if miAsk(msg, customText = ["Download Now! 😄", "I like 32 bit. 🥺"]):

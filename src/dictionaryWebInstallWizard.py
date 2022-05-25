@@ -214,7 +214,7 @@ class DictionarySelectPage(MiWizardPage):
                         dictionary_text += ' - ' + dictionary_description
 
                     dict_item = QTreeWidgetItem([dictionary_text])
-                    dict_item.setCheckState(0, Qt.Unchecked)
+                    dict_item.setCheckState(0, Qt.CheckState.Unchecked)
                     dict_item.setData(0, Qt.UserRole+0, None)
                     dict_item.setData(0, Qt.UserRole+1, dictionary)
 
