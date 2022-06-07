@@ -165,7 +165,7 @@ class TemplateEditor(QDialog):
         tableHeader.setSectionResizeMode(2, QHeaderView.Fixed)
         dictFields.setRowCount(0)
         dictFields.setSortingEnabled(False)
-        dictFields.setEditTriggers(QTableWidget.NoEditTriggers)
+        dictFields.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         dictFields.setSelectionBehavior(QAbstractItemView.SelectRows)
         dictFields.setColumnWidth(2, 40)
         tableHeader.hide()

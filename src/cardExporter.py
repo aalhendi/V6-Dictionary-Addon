@@ -501,7 +501,7 @@ Please review your template and notetype combination."""), level='wrn', day = se
         tableHeader.setSectionResizeMode(2, QHeaderView.Fixed)
         definitions.setRowCount(0)
         definitions.setSortingEnabled(False)
-        definitions.setEditTriggers(QTableWidget.NoEditTriggers)
+        definitions.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         definitions.setSelectionBehavior(QAbstractItemView.SelectRows)
         definitions.setColumnWidth(2, 40)
         tableHeader.hide()

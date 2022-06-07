@@ -280,7 +280,7 @@ class DictGroupEditor(QDialog):
         tableHeader.setSectionResizeMode(2, QHeaderView.Fixed)
         dictionaries.setRowCount(0)
         dictionaries.setSortingEnabled(False)
-        dictionaries.setEditTriggers(QTableWidget.NoEditTriggers)
+        dictionaries.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         dictionaries.setSelectionBehavior(QAbstractItemView.SelectRows)
         dictionaries.setColumnWidth(1, 40)
         if macLin:

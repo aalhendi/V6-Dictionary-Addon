@@ -240,7 +240,7 @@ class SettingsGui(QTabWidget):
         tableHeader.setSectionResizeMode(2, QHeaderView.Fixed)
         groupTemplates.setRowCount(0)
         groupTemplates.setSortingEnabled(False)
-        groupTemplates.setEditTriggers(QTableWidget.NoEditTriggers)
+        groupTemplates.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         groupTemplates.setSelectionBehavior(QAbstractItemView.SelectRows)
         if macLin:
             groupTemplates.setColumnWidth(1, 50)
