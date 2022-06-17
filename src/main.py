@@ -29,7 +29,6 @@ from . import googleimages
 from .forvodl import Forvo
 from urllib.request import Request, urlopen
 from aqt.previewer import Previewer
-# from aqt.editor import Previewer #The preview button has moved into the editor, and the filter button has been removed.
 import requests
 import time
 import os
@@ -865,7 +864,7 @@ def bridgeReroute(self, cmd):
 ogReroute = aqt.editor.Editor.onBridgeCmd 
 aqt.editor.Editor.onBridgeCmd = bridgeReroute
 
-def setBrowserEditor(browser, c , p):
+def setBrowserEditor(browser):
     if mw.migakuDictionary and mw.migakuDictionary.isVisible():
         if browser.editor.note:
             mw.migakuDictionary.dict.setCurrentEditor(browser.editor, 'Browser')
