@@ -42,7 +42,7 @@ class MIDict(AnkiWebView):
         self.dictInt = dictInt
         self.config = self.dictInt.getConfig()
         self.jSend = self.config['jReadingEdit']
-        self.maxW = self.config['maxWidth']
+        self.maxW = self.config['maxWidth'] 
         self.maxH = self.config['maxHeight']
         self.onBridgeCmd = self.handleDictAction
         self.db = db
@@ -161,7 +161,11 @@ class MIDict(AnkiWebView):
 
     def highlightTarget(self, text, term):
         if self.config['highlightTarget']:
-            return  re.sub(u'('+ self.escapePunctuation(term) + ')', r'<span class="targetTerm">\1</span>', text)
+            if self.config['targetTermColor']:
+                targetTermColor = self.config["targetTermColor"] 
+            else:
+                targetTermColor = 'yellow'
+            return  re.sub(u'('+ self.escapePunctuation(term) + ')', rf'<span class="targetTerm" style="--targetTermColor: {targetTermColor}">\1</span>', text)
         return text
 
     def highlightExamples(self, text):

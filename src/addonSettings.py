@@ -20,6 +20,7 @@ from .miutils import miInfo, miAsk
 from . dictionaryManager import DictionaryManagerWidget
 from .ffmpegInstaller import FFMPEGInstaller
 from PyQt6 import QtSvgWidgets
+from .colorButton import ColorButton
 
 verNumber = "1.3.8"
 
@@ -100,13 +101,17 @@ class SettingsGui(QTabWidget):
         self.restoreButton = QPushButton('Restore Defaults')
         self.cancelButton = QPushButton('Cancel')
         self.applyButton = QPushButton('Apply')
-        self.layout = QVBoxLayout()
+        self.settingsLayout = QVBoxLayout()
+        self.stylesLayout = QVBoxLayout()
         self.settingsTab = QWidget(self)
+        self.customStylesTab = QWidget(self)
+        self.targetTermColorButton = ColorButton()
         self.userGuideTab = self.getUserGuideTab()
         self.setupLayout()
         self.addTab(self.settingsTab, "Settings")
         self.addTab(DictionaryManagerWidget(), "Dictionaries")
         self.addTab(self.userGuideTab, "User Guide")
+        self.addTab(self.customStylesTab, "Custom Styles")
         self.addTab(self.getAboutTab(), "About")
         self.loadTemplateTable()
         self.loadGroupTable()
@@ -181,6 +186,7 @@ class SettingsGui(QTabWidget):
         self.convertToMp3.setChecked(config['mp3Convert'])
         self.disableCondensedMessages.setChecked(config['disableCondensed'])
         self.dictOnTop.setChecked(config['dictAlwaysOnTop'])
+        self.targetTermColorButton.setColor(config['targetTermColor'])
         if config.get('condensedAudioDirectory', False) is not False:
             self.chooseAudioDirectory.setText(config['condensedAudioDirectory'])
         else:
@@ -202,6 +208,7 @@ class SettingsGui(QTabWidget):
         nc['frontBracket'] = self.frontBracket.text()
         nc['backBracket'] = self.backBracket.text()
         nc['showTarget'] = self.showTarget.isChecked()
+        nc['targetTermColor'] = self.targetTermColorButton.color()
         nc['tooltips'] = self.tooltipCB.isChecked()
         nc['globalHotkeys'] = self.globalHotkeys.isChecked()
         nc['openOnGlobal'] = self.globalOpen.isChecked()
@@ -414,7 +421,8 @@ class SettingsGui(QTabWidget):
 
         groupLayout.addLayout(dictsLayout)
         groupLayout.addLayout(exportsLayout)
-        self.layout.addLayout(groupLayout)
+        self.settingsLayout.addLayout(groupLayout)
+        self.stylesLayout.addLayout(groupLayout)
 
         optionsBox = QGroupBox('Options')
         optionsLayout = QHBoxLayout()
@@ -554,8 +562,8 @@ class SettingsGui(QTabWidget):
         optionsLayout.addLayout(optLay3)
 
         optionsBox.setLayout(optionsLayout)
-        self.layout.addWidget(optionsBox)
-        self.layout.addStretch()
+        self.settingsLayout.addWidget(optionsBox)
+        self.settingsLayout.addStretch()
 
         buttonsLayout = QHBoxLayout()
         buttonsLayout.addWidget(self.restoreButton)
@@ -563,8 +571,23 @@ class SettingsGui(QTabWidget):
         buttonsLayout.addWidget(self.cancelButton)
         buttonsLayout.addWidget(self.applyButton)
 
-        self.layout.addLayout(buttonsLayout)
-        self.settingsTab.setLayout(self.layout)
+        self.settingsLayout.addLayout(buttonsLayout)
+        
+        self.settingsTab.setLayout(self.settingsLayout)
+
+        stylesButtonsLayout = QVBoxLayout()
+        targetTermLayout = QHBoxLayout()
+        targetTermLayout.addWidget(QLabel("Target Term Color:"))
+        targetTermLayout.addWidget(self.targetTermColorButton)
+        targetTermLayout.addStretch()
+        #TODO: Isolate styles config from other settings
+        targetTermLayout.addWidget(self.cancelButton)
+        targetTermLayout.addWidget(self.applyButton)
+        stylesButtonsLayout.addLayout(targetTermLayout)
+        
+
+        self.stylesLayout.addLayout(stylesButtonsLayout)
+        self.customStylesTab.setLayout(self.stylesLayout)
 
     def cleanDictName(self, name):
         return re.sub(r'l\d+name', '', name)

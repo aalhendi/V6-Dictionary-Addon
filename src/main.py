@@ -28,7 +28,7 @@ from aqt.reviewer import Reviewer
 from . import googleimages
 from .forvodl import Forvo
 from urllib.request import Request, urlopen
-from aqt.previewer import Previewer
+from aqt.browser.previewer import Previewer
 import requests
 import time
 import os
